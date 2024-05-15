@@ -1,6 +1,5 @@
 package cz.kiec.idontwanttosee.ui
 
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -19,40 +18,19 @@ import cz.kiec.idontwanttosee.ui.navigation.AddRule
 import cz.kiec.idontwanttosee.ui.navigation.Main
 import cz.kiec.idontwanttosee.ui.navigation.ModifyRule
 import cz.kiec.idontwanttosee.ui.navigation.Rules
-import cz.kiec.idontwanttosee.ui.navigation.ScreenControllable
 import cz.kiec.idontwanttosee.ui.screen.AddRuleScreen
 import cz.kiec.idontwanttosee.ui.screen.MainScreen
 import cz.kiec.idontwanttosee.ui.screen.ModifyRuleScreen
 import cz.kiec.idontwanttosee.ui.screen.RulesScreen
+import cz.kiec.idontwanttosee.ui.screen.ScreenDecors
 
 @Composable
 fun Application(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
-    var title by remember {
-        mutableStateOf("")
-    }
-
-    var actions by remember {
-        mutableStateOf<@Composable (RowScope.() -> Unit)>({})
-    }
-
-    class ScreenControllableImpl : ScreenControllable {
-        init {
-            title = ""
-            actions = {}
-        }
-
-        @Composable
-        override fun Title(value: String) {
-            title = value
-        }
-
-        @Composable
-        override fun Actions(value: @Composable (RowScope.() -> Unit)) {
-            actions = value
-        }
+    var screenDecors by remember {
+        mutableStateOf(ScreenDecors())
     }
 
     Scaffold(
@@ -60,10 +38,10 @@ fun Application(
 
         topBar = {
             AppBar(
-                title,
-                navController.previousBackStackEntry != null,
-                { navController.navigateUp() },
-                actions
+                title = screenDecors.title.orEmpty(),
+                canGoBack = navController.previousBackStackEntry != null,
+                goBack = { navController.navigateUp() },
+                actions = screenDecors.actions
             )
         }
 
@@ -76,23 +54,33 @@ fun Application(
             startDestination = Main,
         ) {
             composable<Main> {
-                MainScreen(ScreenControllableImpl(), navController = navController)
+                MainScreen(
+                    setScreenDecors = { screenDecors = it(ScreenDecors()) },
+                    navController = navController,
+                )
             }
 
             composable<Rules> {
-                RulesScreen(ScreenControllableImpl(), navController = navController)
+                RulesScreen(
+                    setScreenDecors = { screenDecors = it(ScreenDecors()) },
+                    navController = navController,
+                )
             }
 
             composable<AddRule> {
-                AddRuleScreen(ScreenControllableImpl(), navController = navController)
+                AddRuleScreen(
+                    setScreenDecors = { screenDecors = it(ScreenDecors()) },
+                    navController = navController,
+                )
             }
 
             composable<ModifyRule> {
-                val rule: ModifyRule = it.toRoute()
+                val route: ModifyRule = it.toRoute()
+
                 ModifyRuleScreen(
-                    ScreenControllableImpl(),
+                    id = route.id,
+                    setScreenDecors = { screenDecors = it(ScreenDecors()) },
                     navController = navController,
-                    id = rule.id
                 )
             }
         }

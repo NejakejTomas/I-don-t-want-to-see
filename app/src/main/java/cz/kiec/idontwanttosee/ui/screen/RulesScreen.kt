@@ -44,7 +44,6 @@ import cz.kiec.idontwanttosee.R
 import cz.kiec.idontwanttosee.ui.Dimens
 import cz.kiec.idontwanttosee.ui.navigation.AddRule
 import cz.kiec.idontwanttosee.ui.navigation.ModifyRule
-import cz.kiec.idontwanttosee.ui.navigation.ScreenControllable
 import cz.kiec.idontwanttosee.ui.theme.IDontWantToSeeTheme
 import cz.kiec.idontwanttosee.ui.theme.Typography
 import cz.kiec.idontwanttosee.uiState.RuleUiState
@@ -469,14 +468,17 @@ private fun RuleDialog(
 
 @Composable
 fun RulesScreen(
-    controllable: ScreenControllable,
+    setScreenDecors: @Composable (@Composable ScreenDecors.() -> ScreenDecors) -> Unit,
     navController: NavController,
     modifier: Modifier = Modifier,
     rulesViewModel: RulesViewModel = koinViewModel(),
 ) {
     val uiState by rulesViewModel.uiState.collectAsStateWithLifecycle(RulesUiState())
-    controllable.Actions {
-        NewRuleButton(onNewRule = { navController.navigate(AddRule) })
+
+    setScreenDecors {
+        copy(actions = {
+            NewRuleButton(onNewRule = { navController.navigate(AddRule) })
+        })
     }
 
     LazyColumn(modifier) {

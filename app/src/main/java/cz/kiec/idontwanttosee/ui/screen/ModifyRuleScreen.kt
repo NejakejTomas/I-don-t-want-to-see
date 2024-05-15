@@ -21,7 +21,6 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import cz.kiec.idontwanttosee.ui.Dimens
-import cz.kiec.idontwanttosee.ui.navigation.ScreenControllable
 import cz.kiec.idontwanttosee.ui.screen.content.RuleEdit
 import cz.kiec.idontwanttosee.viewmodel.ModifyRuleViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -53,10 +52,10 @@ private fun AnnotatedCheckbox(
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ModifyRuleScreen(
-    controllable: ScreenControllable,
+    id: Long,
+    setScreenDecors: @Composable (@Composable ScreenDecors.() -> ScreenDecors) -> Unit,
     navController: NavController,
     modifier: Modifier = Modifier,
-    id: Long,
     modifyRuleViewModel: ModifyRuleViewModel = koinViewModel(
         parameters = { parametersOf(id) }),
 ) {

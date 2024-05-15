@@ -20,9 +20,12 @@ fun AppBar(
     title: String?,
     canGoBack: Boolean,
     goBack: () -> Unit,
-    actions: @Composable RowScope.() -> Unit,
+    actions: (@Composable RowScope.() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
+    val shouldShowAppBar = title != null || canGoBack || actions != null
+    if (!shouldShowAppBar) return
+
     CenterAlignedTopAppBar(
         title = {
             title?.let {
@@ -41,6 +44,6 @@ fun AppBar(
             }
         },
         scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
-        actions = actions
+        actions = actions ?: { },
     )
 }

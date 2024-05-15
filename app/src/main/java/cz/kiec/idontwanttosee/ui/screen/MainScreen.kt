@@ -12,15 +12,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import cz.kiec.idontwanttosee.R
 import cz.kiec.idontwanttosee.ui.navigation.Rules
-import cz.kiec.idontwanttosee.ui.navigation.ScreenControllable
 
 @Composable
 fun MainScreen(
-    controllable: ScreenControllable,
-    modifier: Modifier = Modifier,
+    setScreenDecors: @Composable (@Composable ScreenDecors.() -> ScreenDecors) -> Unit,
     navController: NavController,
+    modifier: Modifier = Modifier,
 ) {
-    controllable.Title(stringResource(R.string.app_name))
+    setScreenDecors {
+        copy(title = stringResource(R.string.app_name))
+    }
 
     Column(
         modifier = modifier
@@ -28,9 +29,11 @@ fun MainScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(onClick = {
-            navController.navigate(Rules)
-        })
+        Button(
+            onClick = {
+                navController.navigate(Rules)
+            }
+        )
         {
             Text(stringResource(R.string.rules))
         }

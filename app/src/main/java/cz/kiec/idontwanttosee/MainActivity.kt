@@ -19,6 +19,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CheckPermission()
+
             IDontWantToSeeTheme {
                 KoinContext {
                     Application()
@@ -30,9 +31,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun CheckPermission() {
-    if (NotificationManagerCompat.getEnabledListenerPackages(LocalContext.current)
-            .contains(LocalContext.current.packageName)
-    ) return
+    val enabledPackages = NotificationManagerCompat.getEnabledListenerPackages(LocalContext.current)
+    if (enabledPackages.contains(LocalContext.current.packageName)) return
 
     Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).also {
         LocalContext.current.startActivity(it)
