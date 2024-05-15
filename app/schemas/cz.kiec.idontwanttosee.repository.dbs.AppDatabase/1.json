@@ -1,0 +1,82 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "326e5180ce5d7cb09136ef472cc0e932",
+    "entities": [
+      {
+        "tableName": "rule",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `filter_package_name` TEXT NOT NULL, `filter_ignore_ongoing` INTEGER NOT NULL, `filter_ignore_with_progress_bar` INTEGER NOT NULL, `action_hide_title` INTEGER NOT NULL, `action_hide_content` INTEGER NOT NULL, `action_hide_large_image` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "filters.packageName",
+            "columnName": "filter_package_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "filters.ignoreOngoing",
+            "columnName": "filter_ignore_ongoing",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "filters.ignoreWithProgressBar",
+            "columnName": "filter_ignore_with_progress_bar",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actions.hideTitle",
+            "columnName": "action_hide_title",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actions.hideContent",
+            "columnName": "action_hide_content",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actions.hideLargeImage",
+            "columnName": "action_hide_large_image",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_rule_filter_package_name_filter_ignore_ongoing_filter_ignore_with_progress_bar",
+            "unique": false,
+            "columnNames": [
+              "filter_package_name",
+              "filter_ignore_ongoing",
+              "filter_ignore_with_progress_bar"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_rule_filter_package_name_filter_ignore_ongoing_filter_ignore_with_progress_bar` ON `${TABLE_NAME}` (`filter_package_name`, `filter_ignore_ongoing`, `filter_ignore_with_progress_bar`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '326e5180ce5d7cb09136ef472cc0e932')"
+    ]
+  }
+}
