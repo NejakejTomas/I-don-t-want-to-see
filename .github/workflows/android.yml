@@ -25,15 +25,11 @@ jobs:
         with:
           fallback: 1.0.0
 
-      #      - name: Get version from tag
-      #        uses: JanneMattila/get-version-from-tag@v3
-
       - name: Change the version
-        uses: Swisyn/android-version-generator-actions@v1.5
+        uses: chkfung/android-version-actions@v1.2.2
         with:
           gradlePath: app/build.gradle.kts
           versionCode: ${{ github.run_number }}
-          #          versionName: ${{ steps.get_version.outputs.version }}
           versionName: ${{ steps.tag.outputs.tag }}
 
       - name: set up JDK 17
