@@ -61,6 +61,10 @@ fun AddRuleScreen(
     modifier: Modifier = Modifier,
     addRuleViewModel: AddRuleViewModel = koinViewModel(),
 ) {
+    setScreenDecors {
+        copy(title = stringResource(R.string.top_bar_title_add_rule))
+    }
+
     val notificationPermission = rememberPermissionState(
         permission = Manifest.permission.POST_NOTIFICATIONS
     )
@@ -99,7 +103,7 @@ fun AddRuleScreen(
             },
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Text(stringResource(R.string.add))
+            Text(stringResource(R.string.add_rule_screen_add))
         }
     }
 }

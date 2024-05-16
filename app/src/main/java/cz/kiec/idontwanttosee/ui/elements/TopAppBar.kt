@@ -1,4 +1,4 @@
-package cz.kiec.idontwanttosee.ui
+package cz.kiec.idontwanttosee.ui.elements
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
@@ -16,15 +16,15 @@ import cz.kiec.idontwanttosee.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppBar(
+fun TopAppBar(
     title: String?,
     canGoBack: Boolean,
     goBack: () -> Unit,
     actions: (@Composable RowScope.() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
-    val shouldShowAppBar = title != null || canGoBack || actions != null
-    if (!shouldShowAppBar) return
+    val shouldShow = title != null || canGoBack || actions != null
+    if (!shouldShow) return
 
     CenterAlignedTopAppBar(
         title = {
@@ -39,7 +39,7 @@ fun AppBar(
             IconButton(onClick = goBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.back)
+                    contentDescription = stringResource(R.string.top_bar_back_button_description)
                 )
             }
         },

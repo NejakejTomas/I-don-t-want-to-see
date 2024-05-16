@@ -70,10 +70,10 @@ fun RuleEdit(
             value = packageName,
             onValueChange = onPackageNameChange,
             modifier = Modifier.fillMaxWidth(),
-            label = { Text(stringResource(R.string.package_name)) })
+            label = { Text(stringResource(R.string.rule_filter_package_name)) })
 
         AnnotatedCheckbox(
-            stringResource(R.string.ignore_ongoing),
+            stringResource(R.string.rule_filter_ignore_ongoing),
             painterResource(id = R.drawable.ic_progressbar_ongoing),
             ignoreOngoing,
             onIgnoreOngoingChange,
@@ -81,7 +81,7 @@ fun RuleEdit(
         )
 
         AnnotatedCheckbox(
-            stringResource(R.string.ignore_with_progressbar),
+            stringResource(R.string.rule_filter_ignore_with_progressbar),
             painterResource(id = R.drawable.ic_progressbar),
             ignoreWithProgressBar,
             onIgnoreWithProgressBarChange,
@@ -91,7 +91,7 @@ fun RuleEdit(
         HorizontalDivider()
 
         AnnotatedCheckbox(
-            stringResource(R.string.hide_title),
+            stringResource(R.string.rule_action_hide_title),
             painterResource(id = R.drawable.ic_title),
             hideTitle,
             onHideTitleChange,
@@ -99,7 +99,7 @@ fun RuleEdit(
         )
 
         AnnotatedCheckbox(
-            stringResource(R.string.hide_content),
+            stringResource(R.string.rule_action_hide_content),
             painterResource(id = R.drawable.ic_text),
             hideContent,
             onHideContentChange,
@@ -107,7 +107,7 @@ fun RuleEdit(
         )
 
         AnnotatedCheckbox(
-            stringResource(R.string.hide_image),
+            stringResource(R.string.rule_action_hide_image),
             painterResource(id = R.drawable.ic_image),
             hideLargeImage,
             onHideLargeImageChange,

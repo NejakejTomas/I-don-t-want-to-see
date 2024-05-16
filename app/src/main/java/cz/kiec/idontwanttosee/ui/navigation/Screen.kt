@@ -3,9 +3,6 @@ package cz.kiec.idontwanttosee.ui.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object Main
-
-@Serializable
 data object Rules
 
 @Serializable

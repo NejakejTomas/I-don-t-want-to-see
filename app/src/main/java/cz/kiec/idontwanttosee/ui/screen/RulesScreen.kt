@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CheckboxDefaults
@@ -42,8 +44,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import cz.kiec.idontwanttosee.R
 import cz.kiec.idontwanttosee.ui.Dimens
+import cz.kiec.idontwanttosee.ui.elements.BottomNavigationBarEntry
 import cz.kiec.idontwanttosee.ui.navigation.AddRule
 import cz.kiec.idontwanttosee.ui.navigation.ModifyRule
+import cz.kiec.idontwanttosee.ui.navigation.Rules
 import cz.kiec.idontwanttosee.ui.theme.IDontWantToSeeTheme
 import cz.kiec.idontwanttosee.ui.theme.Typography
 import cz.kiec.idontwanttosee.uiState.RuleUiState
@@ -158,17 +162,17 @@ private fun Rule(
             ),
     ) {
         Column(Modifier.padding(Dimens.D5)) {
-            AnnotatedText(stringResource(R.string.package_name), state.packageName)
+            AnnotatedText(stringResource(R.string.rule_filter_package_name), state.packageName)
             Card(Modifier.fillMaxWidth()) {
                 FlowRow(Modifier.padding(Dimens.D2)) {
                     Icon(
                         painterResource(R.drawable.ic_progressbar_ongoing),
-                        contentDescription = stringResource(id = R.string.ignore_ongoing),
+                        contentDescription = stringResource(id = R.string.rule_filter_ignore_ongoing),
                         tint = state.ignoreOngoing.checkboxColor()
                     )
                     Icon(
                         painterResource(R.drawable.ic_progressbar),
-                        contentDescription = stringResource(id = R.string.ignore_with_progressbar),
+                        contentDescription = stringResource(id = R.string.rule_filter_ignore_with_progressbar),
                         tint = state.ignoreWithProgressBar.checkboxColor()
                     )
                 }
@@ -180,17 +184,17 @@ private fun Rule(
                 FlowRow(Modifier.padding(Dimens.D2)) {
                     Icon(
                         painterResource(R.drawable.ic_title),
-                        contentDescription = stringResource(id = R.string.hide_title),
+                        contentDescription = stringResource(id = R.string.rule_action_hide_title),
                         tint = state.hideTitle.checkboxColor()
                     )
                     Icon(
                         painterResource(R.drawable.ic_text),
-                        contentDescription = stringResource(id = R.string.hide_content),
+                        contentDescription = stringResource(id = R.string.rule_action_hide_content),
                         tint = state.hideContent.checkboxColor()
                     )
                     Icon(
                         painterResource(R.drawable.ic_image),
-                        contentDescription = stringResource(id = R.string.hide_image),
+                        contentDescription = stringResource(id = R.string.rule_action_hide_image),
                         tint = state.hideLargeImage.checkboxColor()
                     )
                 }
@@ -233,16 +237,16 @@ private fun ExpandedRule(
             ),
     ) {
         Column(Modifier.padding(Dimens.D5)) {
-            AnnotatedText(stringResource(R.string.package_name), state.packageName)
+            AnnotatedText(stringResource(R.string.rule_filter_package_name), state.packageName)
             Card(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(Dimens.D2)) {
                     Entry(
-                        R.string.ignore_ongoing,
+                        R.string.rule_filter_ignore_ongoing,
                         R.drawable.ic_progressbar_ongoing,
                         state.ignoreOngoing.checkboxColor()
                     )
                     Entry(
-                        R.string.ignore_with_progressbar,
+                        R.string.rule_filter_ignore_with_progressbar,
                         R.drawable.ic_progressbar,
                         state.ignoreWithProgressBar.checkboxColor()
                     )
@@ -253,14 +257,18 @@ private fun ExpandedRule(
 
             Card(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(Dimens.D2)) {
-                    Entry(R.string.hide_title, R.drawable.ic_title, state.hideTitle.checkboxColor())
                     Entry(
-                        R.string.hide_content,
+                        R.string.rule_action_hide_title,
+                        R.drawable.ic_title,
+                        state.hideTitle.checkboxColor()
+                    )
+                    Entry(
+                        R.string.rule_action_hide_content,
                         R.drawable.ic_text,
                         state.hideContent.checkboxColor()
                     )
                     Entry(
-                        R.string.hide_image,
+                        R.string.rule_action_hide_image,
                         R.drawable.ic_image,
                         state.hideLargeImage.checkboxColor()
                     )
@@ -285,20 +293,28 @@ private fun ExpandableRule(
 
     val filterItems = listOf(
         Item(
-            R.string.ignore_ongoing,
+            R.string.rule_filter_ignore_ongoing,
             R.drawable.ic_progressbar_ongoing,
             state.ignoreOngoing.checkboxColor()
         ), Item(
-            R.string.ignore_with_progressbar,
+            R.string.rule_filter_ignore_with_progressbar,
             R.drawable.ic_progressbar,
             state.ignoreWithProgressBar.checkboxColor()
         )
     )
 
     val actionItems = listOf(
-        Item(R.string.hide_title, R.drawable.ic_title, state.hideTitle.checkboxColor()),
-        Item(R.string.hide_content, R.drawable.ic_text, state.hideContent.checkboxColor()),
-        Item(R.string.hide_image, R.drawable.ic_image, state.hideLargeImage.checkboxColor()),
+        Item(R.string.rule_action_hide_title, R.drawable.ic_title, state.hideTitle.checkboxColor()),
+        Item(
+            R.string.rule_action_hide_content,
+            R.drawable.ic_text,
+            state.hideContent.checkboxColor()
+        ),
+        Item(
+            R.string.rule_action_hide_image,
+            R.drawable.ic_image,
+            state.hideLargeImage.checkboxColor()
+        ),
     )
 
     fun List<Item>.shrunkConstraints() = ConstraintSet {
@@ -380,7 +396,7 @@ private fun ExpandableRule(
             ),
     ) {
         Column(Modifier.padding(Dimens.D5)) {
-            AnnotatedText(stringResource(R.string.package_name), state.packageName)
+            AnnotatedText(stringResource(R.string.rule_filter_package_name), state.packageName)
             filterItems.card()
             Spacer(Modifier.height(Dimens.D1))
             actionItems.card()
@@ -400,7 +416,7 @@ private fun NewRuleButton(
     ) {
         Icon(
             painter = painterResource(R.drawable.ic_add),
-            contentDescription = stringResource(R.string.add_rule)
+            contentDescription = stringResource(R.string.floating_button_add_rule_description)
         )
     }
 }
@@ -430,7 +446,7 @@ private fun RuleDialog(
                     ) {
                         Icon(painterResource(R.drawable.ic_edit), null)
                         Spacer(modifier = Modifier.width(Dimens.D5))
-                        Text(stringResource(R.string.edit))
+                        Text(stringResource(R.string.rule_option_edit))
                     }
                 }
                 Button(
@@ -445,20 +461,7 @@ private fun RuleDialog(
                     ) {
                         Icon(painterResource(R.drawable.ic_delete), null)
                         Spacer(modifier = Modifier.width(Dimens.D5))
-                        Text(stringResource(R.string.delete))
-                    }
-                }
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = onDismiss
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(painterResource(R.drawable.ic_cancel), null)
-                        Spacer(modifier = Modifier.width(Dimens.D5))
-                        Text(stringResource(R.string.cancel))
+                        Text(stringResource(R.string.rule_option_delete))
                     }
                 }
             }
@@ -476,9 +479,19 @@ fun RulesScreen(
     val uiState by rulesViewModel.uiState.collectAsStateWithLifecycle(RulesUiState())
 
     setScreenDecors {
-        copy(actions = {
-            NewRuleButton(onNewRule = { navController.navigate(AddRule) })
-        })
+        copy(
+            title = stringResource(R.string.top_bar_title_rules),
+            bottomNavigationItems = bottomNavigationItems + listOf(
+                BottomNavigationBarEntry(
+                    stringResource(R.string.navigation_bar_item_rules),
+                    { Icon(Icons.AutoMirrored.Filled.List, null) },
+                    Rules
+                )
+            ),
+            topBarActions = {
+                NewRuleButton(onNewRule = { navController.navigate(AddRule) })
+            },
+        )
     }
 
     LazyColumn(modifier) {

@@ -14,12 +14,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
+import cz.kiec.idontwanttosee.R
 import cz.kiec.idontwanttosee.ui.Dimens
 import cz.kiec.idontwanttosee.ui.screen.content.RuleEdit
 import cz.kiec.idontwanttosee.viewmodel.ModifyRuleViewModel
@@ -59,6 +61,10 @@ fun ModifyRuleScreen(
     modifyRuleViewModel: ModifyRuleViewModel = koinViewModel(
         parameters = { parametersOf(id) }),
 ) {
+    setScreenDecors {
+        copy(title = stringResource(R.string.top_bar_title_modify_rule))
+    }
+
     val notificationPermission = rememberPermissionState(
         permission = Manifest.permission.POST_NOTIFICATIONS
     )

@@ -14,12 +14,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import cz.kiec.idontwanttosee.ui.elements.BottomNavigationBar
+import cz.kiec.idontwanttosee.ui.elements.TopAppBar
 import cz.kiec.idontwanttosee.ui.navigation.AddRule
-import cz.kiec.idontwanttosee.ui.navigation.Main
 import cz.kiec.idontwanttosee.ui.navigation.ModifyRule
 import cz.kiec.idontwanttosee.ui.navigation.Rules
 import cz.kiec.idontwanttosee.ui.screen.AddRuleScreen
-import cz.kiec.idontwanttosee.ui.screen.MainScreen
 import cz.kiec.idontwanttosee.ui.screen.ModifyRuleScreen
 import cz.kiec.idontwanttosee.ui.screen.RulesScreen
 import cz.kiec.idontwanttosee.ui.screen.ScreenDecors
@@ -37,12 +37,15 @@ fun Application(
         modifier = modifier,
 
         topBar = {
-            AppBar(
+            TopAppBar(
                 title = screenDecors.title.orEmpty(),
                 canGoBack = navController.previousBackStackEntry != null,
                 goBack = { navController.navigateUp() },
-                actions = screenDecors.actions
+                actions = screenDecors.topBarActions
             )
+        },
+        bottomBar = {
+            BottomNavigationBar(navController, entries = screenDecors.bottomNavigationItems)
         }
 
     ) { contentPadding ->
@@ -51,16 +54,10 @@ fun Application(
                 .padding(contentPadding)
                 .padding(Dimens.D7, 0.dp, Dimens.D7, Dimens.D7),
             navController = navController,
-            startDestination = Main,
+            startDestination = Rules,
         ) {
-            composable<Main> {
-                MainScreen(
-                    setScreenDecors = { screenDecors = it(ScreenDecors()) },
-                    navController = navController,
-                )
-            }
-
             composable<Rules> {
+                screenDecors = ScreenDecors()
                 RulesScreen(
                     setScreenDecors = { screenDecors = it(ScreenDecors()) },
                     navController = navController,
@@ -68,6 +65,7 @@ fun Application(
             }
 
             composable<AddRule> {
+                screenDecors = ScreenDecors()
                 AddRuleScreen(
                     setScreenDecors = { screenDecors = it(ScreenDecors()) },
                     navController = navController,
@@ -75,6 +73,7 @@ fun Application(
             }
 
             composable<ModifyRule> {
+                screenDecors = ScreenDecors()
                 val route: ModifyRule = it.toRoute()
 
                 ModifyRuleScreen(
