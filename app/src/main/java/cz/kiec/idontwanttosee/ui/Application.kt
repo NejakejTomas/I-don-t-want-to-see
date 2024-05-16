@@ -1,6 +1,8 @@
 package cz.kiec.idontwanttosee.ui
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,17 +37,33 @@ fun Application(
 
     Scaffold(
         modifier = modifier,
-
         topBar = {
             TopAppBar(
                 title = screenDecors.title.orEmpty(),
                 canGoBack = navController.previousBackStackEntry != null,
                 goBack = { navController.navigateUp() },
-                actions = screenDecors.topBarActions
+                actions = {
+                    screenDecors.topBarActions.forEach {
+                        IconButton(
+                            onClick = it.onClick
+                        ) {
+                            it.icon()
+                        }
+                    }
+                }
             )
         },
         bottomBar = {
-            BottomNavigationBar(navController, entries = screenDecors.bottomNavigationItems)
+            BottomNavigationBar(navController, entries = screenDecors.bottomNavigationEntries)
+        },
+        floatingActionButton = {
+            screenDecors.floatingButton?.let {
+                FloatingActionButton(
+                    onClick = it.onClick,
+                ) {
+                    it.icon()
+                }
+            }
         }
 
     ) { contentPadding ->
@@ -59,7 +77,7 @@ fun Application(
             composable<Rules> {
                 screenDecors = ScreenDecors()
                 RulesScreen(
-                    setScreenDecors = { screenDecors = it(ScreenDecors()) },
+                    setScreenDecors = { screenDecors = it },
                     navController = navController,
                 )
             }
@@ -67,7 +85,7 @@ fun Application(
             composable<AddRule> {
                 screenDecors = ScreenDecors()
                 AddRuleScreen(
-                    setScreenDecors = { screenDecors = it(ScreenDecors()) },
+                    setScreenDecors = { screenDecors = it },
                     navController = navController,
                 )
             }
@@ -78,7 +96,7 @@ fun Application(
 
                 ModifyRuleScreen(
                     id = route.id,
-                    setScreenDecors = { screenDecors = it(ScreenDecors()) },
+                    setScreenDecors = { screenDecors = it },
                     navController = navController,
                 )
             }

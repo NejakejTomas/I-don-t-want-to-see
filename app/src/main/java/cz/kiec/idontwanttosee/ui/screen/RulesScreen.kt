@@ -23,7 +23,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -44,7 +43,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import cz.kiec.idontwanttosee.R
 import cz.kiec.idontwanttosee.ui.Dimens
-import cz.kiec.idontwanttosee.ui.elements.BottomNavigationBarEntry
 import cz.kiec.idontwanttosee.ui.navigation.AddRule
 import cz.kiec.idontwanttosee.ui.navigation.ModifyRule
 import cz.kiec.idontwanttosee.ui.navigation.Rules
@@ -406,22 +404,6 @@ private fun ExpandableRule(
 }
 
 @Composable
-private fun NewRuleButton(
-    onNewRule: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    IconButton(
-        modifier = modifier,
-        onClick = onNewRule
-    ) {
-        Icon(
-            painter = painterResource(R.drawable.ic_add),
-            contentDescription = stringResource(R.string.floating_button_add_rule_description)
-        )
-    }
-}
-
-@Composable
 private fun RuleDialog(
     onDismiss: () -> Unit,
     onDelete: () -> Unit,
@@ -471,28 +453,34 @@ private fun RuleDialog(
 
 @Composable
 fun RulesScreen(
-    setScreenDecors: @Composable (@Composable ScreenDecors.() -> ScreenDecors) -> Unit,
+    setScreenDecors: @Composable (ScreenDecors) -> Unit,
     navController: NavController,
     modifier: Modifier = Modifier,
     rulesViewModel: RulesViewModel = koinViewModel(),
 ) {
     val uiState by rulesViewModel.uiState.collectAsStateWithLifecycle(RulesUiState())
 
-    setScreenDecors {
-        copy(
+    setScreenDecors(
+        ScreenDecors(
             title = stringResource(R.string.top_bar_title_rules),
-            bottomNavigationItems = bottomNavigationItems + listOf(
+            bottomNavigationEntries = listOf(
                 BottomNavigationBarEntry(
                     stringResource(R.string.navigation_bar_item_rules),
                     { Icon(Icons.AutoMirrored.Filled.List, null) },
                     Rules
                 )
             ),
-            topBarActions = {
-                NewRuleButton(onNewRule = { navController.navigate(AddRule) })
-            },
+            floatingButton = ClickableIcon(
+                icon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_add),
+                        contentDescription = stringResource(R.string.floating_button_add_rule_description)
+                    )
+                },
+                onClick = { navController.navigate(AddRule) }
+            )
         )
-    }
+    )
 
     LazyColumn(modifier) {
         items(uiState.rules, key = { it.id }) { rule ->

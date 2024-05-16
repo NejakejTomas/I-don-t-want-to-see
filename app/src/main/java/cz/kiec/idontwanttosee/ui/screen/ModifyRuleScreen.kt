@@ -55,15 +55,15 @@ private fun AnnotatedCheckbox(
 @Composable
 fun ModifyRuleScreen(
     id: Long,
-    setScreenDecors: @Composable (@Composable ScreenDecors.() -> ScreenDecors) -> Unit,
+    setScreenDecors: @Composable (ScreenDecors) -> Unit,
     navController: NavController,
     modifier: Modifier = Modifier,
     modifyRuleViewModel: ModifyRuleViewModel = koinViewModel(
         parameters = { parametersOf(id) }),
 ) {
-    setScreenDecors {
-        copy(title = stringResource(R.string.top_bar_title_modify_rule))
-    }
+    setScreenDecors(
+        ScreenDecors(title = stringResource(R.string.top_bar_title_modify_rule))
+    )
 
     val notificationPermission = rememberPermissionState(
         permission = Manifest.permission.POST_NOTIFICATIONS
