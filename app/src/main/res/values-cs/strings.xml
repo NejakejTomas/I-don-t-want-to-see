@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">I don\'t want to see</string>
+    <string name="notification_channel_name">Kanál notifikací</string>
+    <string name="notification_channel_description">TODO</string>
+
+    <string name="top_bar_back_button_description">Zpět</string>
+    <string name="floating_button_add_rule_description">Přidat pravidlo</string>
+
+    <string name="add_rule_screen_add">Přidat</string>
+
+    <string name="rule_action_hide_title">Schovat nadpis</string>
+    <string name="rule_action_hide_content">Schovat obsah</string>
+    <string name="rule_action_hide_image">Schovat obrázek</string>
+
+    <string name="rule_option_edit">Upravit</string>
+    <string name="rule_option_delete">Odstranit</string>
+
+    <string name="rule_filter_package_name">Název balíčku</string>
+    <string name="rule_filter_ignore_ongoing">Ignorovat probíhající</string>
+    <string name="rule_filter_ignore_with_progressbar">Ignorovat s progressbarem</string>
+
+    <string name="navigation_bar_item_rules">Pravidla</string>
+    <string name="navigation_bar_item_notification_channels">Notifikační kanály</string>
+
+    <string name="top_bar_title_rules">Pravidla</string>
+    <string name="top_bar_title_modify_rule">Upravit pravidlo</string>
+    <string name="top_bar_title_add_rule">Přidat pravidlo</string>
+    <string name="top_bar_title_add_channel">Přidat kanál</string>
+</resources>

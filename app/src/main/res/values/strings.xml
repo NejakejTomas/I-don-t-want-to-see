@@ -20,7 +20,7 @@
     <string name="rule_filter_ignore_with_progressbar">Ignore with progressbar</string>
 
     <string name="navigation_bar_item_rules">Rules</string>
-    <string name="navigation_bar_item_notification_channels">Channels</string>
+    <string name="navigation_bar_item_notification_channels">Notification channels</string>
 
     <string name="top_bar_title_rules">Rules</string>
     <string name="top_bar_title_modify_rule">Modify rule</string>
