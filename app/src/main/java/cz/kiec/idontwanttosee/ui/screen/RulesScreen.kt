@@ -5,8 +5,6 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -65,42 +63,6 @@ private fun AnnotatedTextPreview() {
 
 @Preview
 @Composable
-private fun RulePreview() {
-    IDontWantToSeeTheme {
-        Rule(
-            Modifier, RuleUiState(
-                0,
-                "com.discord",
-                ignoreOngoing = true,
-                ignoreWithProgressBar = false,
-                hideTitle = true,
-                hideContent = false,
-                hideLargeImage = true
-            ),
-            {}, {})
-    }
-}
-
-@Preview
-@Composable
-private fun ExpandedRulePreview() {
-    IDontWantToSeeTheme {
-        ExpandedRule(
-            Modifier, RuleUiState(
-                0,
-                "com.discord",
-                ignoreOngoing = true,
-                ignoreWithProgressBar = false,
-                hideTitle = true,
-                hideContent = false,
-                hideLargeImage = true
-            ),
-            {}, {})
-    }
-}
-
-@Preview
-@Composable
 private fun ExpandableRulePreview() {
     IDontWantToSeeTheme {
         ExpandableRule(
@@ -142,138 +104,6 @@ private fun AnnotatedText(annotation: String, text: String, modifier: Modifier =
 private fun Boolean.checkboxColor(): Color {
     return if (this) CheckboxDefaults.colors().checkedBoxColor
     else CheckboxDefaults.colors().disabledCheckedBoxColor
-}
-
-@Composable
-@OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
-private fun Rule(
-    modifier: Modifier = Modifier,
-    state: RuleUiState,
-    onLongClick: (RuleUiState) -> Unit,
-    onClick: (RuleUiState) -> Unit,
-) {
-    ElevatedCard(
-        modifier = modifier
-            .combinedClickable(
-                onClick = { onClick(state) },
-                onLongClick = { onLongClick(state) },
-            ),
-    ) {
-        Column(Modifier.padding(Dimens.D5)) {
-            AnnotatedText(stringResource(R.string.rule_filter_package_name), state.packageName)
-            Card(Modifier.fillMaxWidth()) {
-                FlowRow(Modifier.padding(Dimens.D2)) {
-                    Icon(
-                        painterResource(R.drawable.ic_progressbar_ongoing),
-                        contentDescription = stringResource(id = R.string.rule_filter_ignore_ongoing),
-                        tint = state.ignoreOngoing.checkboxColor()
-                    )
-                    Icon(
-                        painterResource(R.drawable.ic_progressbar),
-                        contentDescription = stringResource(id = R.string.rule_filter_ignore_with_progressbar),
-                        tint = state.ignoreWithProgressBar.checkboxColor()
-                    )
-                }
-            }
-
-            Spacer(Modifier.height(Dimens.D1))
-
-            Card(Modifier.fillMaxWidth()) {
-                FlowRow(Modifier.padding(Dimens.D2)) {
-                    Icon(
-                        painterResource(R.drawable.ic_title),
-                        contentDescription = stringResource(id = R.string.rule_action_hide_title),
-                        tint = state.hideTitle.checkboxColor()
-                    )
-                    Icon(
-                        painterResource(R.drawable.ic_text),
-                        contentDescription = stringResource(id = R.string.rule_action_hide_content),
-                        tint = state.hideContent.checkboxColor()
-                    )
-                    Icon(
-                        painterResource(R.drawable.ic_image),
-                        contentDescription = stringResource(id = R.string.rule_action_hide_image),
-                        tint = state.hideLargeImage.checkboxColor()
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-@OptIn(ExperimentalFoundationApi::class)
-private fun ExpandedRule(
-    modifier: Modifier = Modifier,
-    state: RuleUiState,
-    onLongClick: (RuleUiState) -> Unit,
-    onClick: (RuleUiState) -> Unit,
-) {
-    @Composable
-    fun Entry(
-        @StringRes text: Int,
-        @DrawableRes icon: Int,
-        iconColor: Color,
-        modifier: Modifier = Modifier
-    ) {
-        Row(modifier, verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                painterResource(icon),
-                contentDescription = null,
-                tint = iconColor
-            )
-            Spacer(Modifier.width(Dimens.D2))
-            Text(stringResource(text))
-        }
-    }
-
-    ElevatedCard(
-        modifier = modifier
-            .combinedClickable(
-                onClick = { onClick(state) },
-                onLongClick = { onLongClick(state) },
-            ),
-    ) {
-        Column(Modifier.padding(Dimens.D5)) {
-            AnnotatedText(stringResource(R.string.rule_filter_package_name), state.packageName)
-            Card(Modifier.fillMaxWidth()) {
-                Column(Modifier.padding(Dimens.D2)) {
-                    Entry(
-                        R.string.rule_filter_ignore_ongoing,
-                        R.drawable.ic_progressbar_ongoing,
-                        state.ignoreOngoing.checkboxColor()
-                    )
-                    Entry(
-                        R.string.rule_filter_ignore_with_progressbar,
-                        R.drawable.ic_progressbar,
-                        state.ignoreWithProgressBar.checkboxColor()
-                    )
-                }
-            }
-
-            Spacer(Modifier.height(Dimens.D1))
-
-            Card(Modifier.fillMaxWidth()) {
-                Column(Modifier.padding(Dimens.D2)) {
-                    Entry(
-                        R.string.rule_action_hide_title,
-                        R.drawable.ic_title,
-                        state.hideTitle.checkboxColor()
-                    )
-                    Entry(
-                        R.string.rule_action_hide_content,
-                        R.drawable.ic_text,
-                        state.hideContent.checkboxColor()
-                    )
-                    Entry(
-                        R.string.rule_action_hide_image,
-                        R.drawable.ic_image,
-                        state.hideLargeImage.checkboxColor()
-                    )
-                }
-            }
-        }
-    }
 }
 
 @Composable
