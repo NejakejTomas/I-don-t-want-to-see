@@ -6,6 +6,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Abc
+import androidx.compose.material.icons.filled.CheckCircleOutline
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Title
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -15,9 +20,9 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import cz.kiec.idontwanttosee.R
 import cz.kiec.idontwanttosee.ui.Dimens
 
@@ -25,7 +30,7 @@ import cz.kiec.idontwanttosee.ui.Dimens
 @Composable
 private fun AnnotatedCheckbox(
     annotation: String,
-    icon: Painter,
+    icon: ImageVector,
     checked: Boolean,
     onCheckedChanged: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -35,7 +40,7 @@ private fun AnnotatedCheckbox(
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(painter = icon, contentDescription = null)
+        Icon(imageVector = icon, contentDescription = null)
         Spacer(modifier = Modifier.width(Dimens.D10))
         Text(text = annotation, modifier = Modifier.weight(1f, true))
         Checkbox(
@@ -50,6 +55,7 @@ private fun AnnotatedCheckbox(
 fun RuleEdit(
     modifier: Modifier = Modifier,
     packageName: String,
+    isEnabled: Boolean,
     ignoreOngoing: Boolean,
     ignoreWithProgressBar: Boolean,
     hideTitle: Boolean,
@@ -58,6 +64,7 @@ fun RuleEdit(
     notificationChannels: List<String>,
     selectedNotificationChannel: String,
     onPackageNameChange: (String) -> Unit,
+    onEnabledChange: (Boolean) -> Unit,
     onIgnoreOngoingChange: (Boolean) -> Unit,
     onIgnoreWithProgressBarChange: (Boolean) -> Unit,
     onHideTitleChange: (Boolean) -> Unit,
@@ -76,8 +83,18 @@ fun RuleEdit(
 
         item {
             AnnotatedCheckbox(
+                stringResource(R.string.rule_filter_is_enabled),
+                Icons.Filled.CheckCircleOutline,
+                isEnabled,
+                onEnabledChange,
+                Modifier.fillMaxWidth(),
+            )
+        }
+
+        item {
+            AnnotatedCheckbox(
                 stringResource(R.string.rule_filter_ignore_ongoing),
-                painterResource(id = R.drawable.ic_progressbar_ongoing),
+                ImageVector.vectorResource(R.drawable.ic_progressbar_ongoing),
                 ignoreOngoing,
                 onIgnoreOngoingChange,
                 Modifier.fillMaxWidth(),
@@ -87,7 +104,7 @@ fun RuleEdit(
         item {
             AnnotatedCheckbox(
                 stringResource(R.string.rule_filter_ignore_with_progressbar),
-                painterResource(id = R.drawable.ic_progressbar),
+                ImageVector.vectorResource(R.drawable.ic_progressbar),
                 ignoreWithProgressBar,
                 onIgnoreWithProgressBarChange,
                 Modifier.fillMaxWidth(),
@@ -101,7 +118,7 @@ fun RuleEdit(
         item {
             AnnotatedCheckbox(
                 stringResource(R.string.rule_action_hide_title),
-                painterResource(id = R.drawable.ic_title),
+                Icons.Filled.Title,
                 hideTitle,
                 onHideTitleChange,
                 Modifier.fillMaxWidth(),
@@ -111,7 +128,7 @@ fun RuleEdit(
         item {
             AnnotatedCheckbox(
                 stringResource(R.string.rule_action_hide_content),
-                painterResource(id = R.drawable.ic_text),
+                Icons.Filled.Abc,
                 hideContent,
                 onHideContentChange,
                 Modifier.fillMaxWidth(),
@@ -121,7 +138,7 @@ fun RuleEdit(
         item {
             AnnotatedCheckbox(
                 stringResource(R.string.rule_action_hide_image),
-                painterResource(id = R.drawable.ic_image),
+                Icons.Filled.Image,
                 hideLargeImage,
                 onHideLargeImageChange,
                 Modifier.fillMaxWidth(),

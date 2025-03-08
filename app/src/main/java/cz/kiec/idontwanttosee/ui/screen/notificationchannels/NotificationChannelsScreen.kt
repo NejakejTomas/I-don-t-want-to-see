@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -12,7 +14,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -48,7 +49,7 @@ fun NotificationChannelsScreen(
         floatingActionButton = {
             FloatingActionButton(onClick = { navController.navigate(Screen.AddNotificationChannel) }) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_add),
+                    imageVector = Icons.Filled.Add,
                     contentDescription = stringResource(R.string.floating_button_add_channel_description)
                 )
             }

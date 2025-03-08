@@ -54,6 +54,7 @@ class RulesViewModel(private val repository: RuleRepository) : ViewModel() {
         RulesUiState.RuleUiState(
             id,
             filters.packageName,
+            filters.isEnabled,
             filters.ignoreOngoing,
             filters.ignoreWithProgressBar,
             actions.hideTitle,
@@ -66,6 +67,7 @@ class RulesViewModel(private val repository: RuleRepository) : ViewModel() {
             id,
             Rule.Filters(
                 packageName,
+                isEnabled,
                 ignoreOngoing,
                 ignoreWithProgressBar,
             ),

@@ -14,6 +14,7 @@ class RuleRepository(private val ruleDao: RuleDao) {
     suspend fun selectActions(
         packageName: String, isOngoing: Boolean, hasProgressBar: Boolean
     ) = ruleDao.select(packageName).filter {
+        if (!it.filters.isEnabled) return@filter false
         if (isOngoing && it.filters.ignoreOngoing) return@filter false
         if (hasProgressBar && it.filters.ignoreWithProgressBar) return@filter false
 

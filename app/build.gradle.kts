@@ -84,6 +84,7 @@ dependencies {
     implementation(libs.accompanist.permissions)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.androidx.material.icons.extended)
 
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
 

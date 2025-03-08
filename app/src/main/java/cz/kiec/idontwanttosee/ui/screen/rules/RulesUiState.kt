@@ -8,6 +8,7 @@ data class RulesUiState(
     data class RuleUiState(
         val id: Long,
         val packageName: String,
+        val isEnabled: Boolean,
         val ignoreOngoing: Boolean,
         val ignoreWithProgressBar: Boolean,
         val hideTitle: Boolean,

@@ -1,6 +1,5 @@
 package cz.kiec.idontwanttosee.ui.screen.rules
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -12,6 +11,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Abc
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CheckCircleOutline
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Title
 import androidx.compose.material3.Card
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ElevatedCard
@@ -23,8 +28,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
@@ -65,7 +71,7 @@ fun RulesScreen(
         floatingActionButton = {
             FloatingActionButton(onClick = { navController.navigate(Screen.AddRule) }) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_add),
+                    imageVector = Icons.Filled.Add,
                     contentDescription = stringResource(R.string.floating_button_add_rule_description)
                 )
             }
@@ -73,9 +79,11 @@ fun RulesScreen(
     ) { innerPadding ->
         val uiState by viewModel.uiState.collectAsStateWithLifecycle(RulesUiState())
 
-        LazyColumn(Modifier
-            .padding(innerPadding)
-            .screenContentPadding()) {
+        LazyColumn(
+            Modifier
+                .padding(innerPadding)
+                .screenContentPadding()
+        ) {
             items(uiState.rules, key = { it.id }) { rule ->
                 val m =
                     Modifier
@@ -109,8 +117,9 @@ private fun ExpandableRulePreview() {
     IDontWantToSeeTheme {
         ExpandableRule(
             Modifier, RulesUiState.RuleUiState(
-                0,
-                "com.discord",
+                id = 0,
+                packageName = "com.discord",
+                isEnabled = true,
                 ignoreOngoing = true,
                 ignoreWithProgressBar = false,
                 hideTitle = true,
@@ -138,31 +147,41 @@ private fun ExpandableRule(
     onClick: (RulesUiState.RuleUiState) -> Unit,
 ) {
     data class Item(
-        @StringRes val text: Int, @DrawableRes val icon: Int, val iconColor: Color,
+        @StringRes val text: Int, val icon: ImageVector, val iconColor: Color,
     )
 
     val filterItems = listOf(
         Item(
+            R.string.rule_filter_is_enabled,
+            Icons.Filled.CheckCircleOutline,
+            state.isEnabled.checkboxColor()
+        ),
+        Item(
             R.string.rule_filter_ignore_ongoing,
-            R.drawable.ic_progressbar_ongoing,
+            ImageVector.vectorResource(R.drawable.ic_progressbar_ongoing),
             state.ignoreOngoing.checkboxColor()
-        ), Item(
+        ),
+        Item(
             R.string.rule_filter_ignore_with_progressbar,
-            R.drawable.ic_progressbar,
+            ImageVector.vectorResource(R.drawable.ic_progressbar),
             state.ignoreWithProgressBar.checkboxColor()
         )
     )
 
     val actionItems = listOf(
-        Item(R.string.rule_action_hide_title, R.drawable.ic_title, state.hideTitle.checkboxColor()),
+        Item(
+            R.string.rule_action_hide_title,
+            Icons.Filled.Title,
+            state.hideTitle.checkboxColor()
+        ),
         Item(
             R.string.rule_action_hide_content,
-            R.drawable.ic_text,
+            Icons.Filled.Abc,
             state.hideContent.checkboxColor()
         ),
         Item(
             R.string.rule_action_hide_image,
-            R.drawable.ic_image,
+            Icons.Filled.Image,
             state.hideLargeImage.checkboxColor()
         ),
     )
@@ -220,7 +239,7 @@ private fun ExpandableRule(
             ) {
                 forEachIndexed { i, item ->
                     Icon(
-                        painter = painterResource(item.icon),
+                        imageVector = item.icon,
                         contentDescription = if (isExpanded) null else stringResource(item.text),
                         tint = item.iconColor,
                         modifier = Modifier.layoutId("icon_$i")

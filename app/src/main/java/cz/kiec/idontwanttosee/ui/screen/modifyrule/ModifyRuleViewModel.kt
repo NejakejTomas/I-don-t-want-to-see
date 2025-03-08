@@ -31,6 +31,10 @@ class ModifyRuleViewModel(
         _uiState.value = _uiState.value.copy(packageName = value)
     }
 
+    fun setIsEnabled(value: Boolean) {
+        _uiState.value = _uiState.value.copy(isEnabled = value)
+    }
+
     fun setIgnoreOngoing(value: Boolean) {
         _uiState.value = _uiState.value.copy(ignoreOngoing = value)
     }
@@ -54,6 +58,7 @@ class ModifyRuleViewModel(
     private fun Rule.toUiState() =
         ModifyRuleUiState(
             filters.packageName,
+            filters.isEnabled,
             filters.ignoreOngoing,
             filters.ignoreWithProgressBar,
             actions.hideTitle,
@@ -66,6 +71,7 @@ class ModifyRuleViewModel(
             id,
             Rule.Filters(
                 packageName,
+                isEnabled,
                 ignoreOngoing,
                 ignoreWithProgressBar,
             ),

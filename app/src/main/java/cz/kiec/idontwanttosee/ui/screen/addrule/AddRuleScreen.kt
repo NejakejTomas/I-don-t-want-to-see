@@ -69,6 +69,7 @@ fun AddRuleScreen(
             RuleEdit(
                 Modifier.weight(1f),
                 uiState.packageName,
+                uiState.isEnabled,
                 uiState.ignoreOngoing,
                 uiState.ignoreWithProgressBar,
                 uiState.hideTitle,
@@ -77,6 +78,7 @@ fun AddRuleScreen(
                 listOf("aaa", "bbb", "ccc"),
                 selectedText,
                 viewModel::setPackageName,
+                viewModel::setIsEnabled,
                 viewModel::setIgnoreOngoing,
                 viewModel::setIgnoreWithProgressBar,
                 viewModel::setHideTitle,

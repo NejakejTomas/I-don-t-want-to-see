@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ModifyRuleUiState(
     val packageName: String = "",
+    val isEnabled: Boolean = true,
     val ignoreOngoing: Boolean = false,
     val ignoreWithProgressBar: Boolean = false,
     val hideTitle: Boolean = false,

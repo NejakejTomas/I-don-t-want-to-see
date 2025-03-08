@@ -17,6 +17,7 @@
     <string name="rule_option_delete">Delete</string>
 
     <string name="rule_filter_package_name">Package name</string>
+    <string name="rule_filter_is_enabled">Enabled</string>
     <string name="rule_filter_ignore_ongoing">Ignore ongoing</string>
     <string name="rule_filter_ignore_with_progressbar">Ignore with progressbar</string>
 

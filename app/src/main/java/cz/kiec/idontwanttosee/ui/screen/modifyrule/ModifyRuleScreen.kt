@@ -58,6 +58,7 @@ fun ModifyRuleScreen(
                 .padding(innerPadding)
                 .screenContentPadding(),
             uiState.packageName,
+            uiState.isEnabled,
             uiState.ignoreOngoing,
             uiState.ignoreWithProgressBar,
             uiState.hideTitle,
@@ -66,6 +67,7 @@ fun ModifyRuleScreen(
             listOf("aaa", "bbb", "ccc"),
             "aaa",
             viewModel::setPackageName,
+            viewModel::setIsEnabled,
             viewModel::setIgnoreOngoing,
             viewModel::setIgnoreWithProgressBar,
             viewModel::setHideTitle,

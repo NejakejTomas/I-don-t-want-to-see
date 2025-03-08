@@ -19,6 +19,7 @@ data class Rule(
 ) {
     data class Filters(
         @ColumnInfo(name = "package_name") val packageName: String,
+        @ColumnInfo(name = "is_enabled") val isEnabled: Boolean,
         @ColumnInfo(name = "ignore_ongoing") val ignoreOngoing: Boolean,
         @ColumnInfo(name = "ignore_with_progress_bar") val ignoreWithProgressBar: Boolean,
     )

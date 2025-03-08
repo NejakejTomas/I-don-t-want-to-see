@@ -22,6 +22,10 @@ class AddRuleViewModel(
         _uiState.value = _uiState.value.copy(packageName = value)
     }
 
+    fun setIsEnabled(value: Boolean) {
+        _uiState.value = _uiState.value.copy(isEnabled = value)
+    }
+
     fun setIgnoreOngoing(value: Boolean) {
         _uiState.value = _uiState.value.copy(ignoreOngoing = value)
     }
@@ -55,11 +59,11 @@ class AddRuleViewModel(
             0,
             Rule.Filters(
                 packageName,
+                isEnabled,
                 ignoreOngoing,
                 ignoreWithProgressBar,
             ),
             Rule.Actions(
-
                 hideTitle,
                 hideContent,
                 hideLargeImage,
