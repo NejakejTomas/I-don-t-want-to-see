@@ -12,19 +12,28 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hasRoute
 import cz.kiec.idontwanttosee.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(
     title: String?,
-    canGoBack: Boolean,
-    goBack: () -> Unit,
-    actions: (@Composable RowScope.() -> Unit)?,
+    navController: NavController,
     modifier: Modifier = Modifier,
+    actions: (@Composable RowScope.() -> Unit)? = null,
+    bottomNavBarEntries: List<BottomNavigationBarEntry> = listOf(),
 ) {
+    val isOnTop = bottomNavBarEntries.any {
+        navController.currentDestination?.hasRoute(it.screen::class) == true
+    }
+
+    val canGoBack = navController.previousBackStackEntry != null && !isOnTop
+
     val shouldShow = title != null || canGoBack || actions != null
     if (!shouldShow) return
+
 
     CenterAlignedTopAppBar(
         title = {
@@ -36,7 +45,7 @@ fun TopAppBar(
         navigationIcon = icon@{
             if (!canGoBack) return@icon
 
-            IconButton(onClick = goBack) {
+            IconButton(onClick = navController::navigateUp) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.top_bar_back_button_description)

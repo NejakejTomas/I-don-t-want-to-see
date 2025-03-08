@@ -11,8 +11,8 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.LocusIdCompat
 import androidx.core.graphics.drawable.IconCompat
 import cz.kiec.idontwanttosee.NotificationListener.Operation.Companion.toOperation
-import cz.kiec.idontwanttosee.repository.RuleRepository
-import cz.kiec.idontwanttosee.repository.dbs.entity.Rule
+import cz.kiec.idontwanttosee.dbs.entity.Rule
+import cz.kiec.idontwanttosee.dbs.repository.RuleRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

@@ -10,12 +10,12 @@ plugins {
 
 android {
     namespace = "cz.kiec.idontwanttosee"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "cz.kiec.idontwanttosee"
         minSdk = 33
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -71,7 +71,6 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
@@ -79,13 +78,14 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.insert.koin)
     implementation(libs.androidx.navigation.runtime.ktx)
-    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.navigation)
     implementation(libs.accompanist.permissions)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.androidx.constraintlayout.compose)
+
+    implementation(libs.androidx.lifecycle.viewmodel.savedstate)
 
     implementation(platform(libs.androidx.compose.bom))
     ksp(libs.androidx.room.compiler)

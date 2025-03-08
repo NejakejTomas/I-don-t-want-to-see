@@ -1,10 +1,10 @@
-package cz.kiec.idontwanttosee.uiState
+package cz.kiec.idontwanttosee.ui.screen.addrule
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class RuleEditUiState(
+data class AddRuleUiState(
     val packageName: String = "",
     val ignoreOngoing: Boolean = false,
     val ignoreWithProgressBar: Boolean = false,

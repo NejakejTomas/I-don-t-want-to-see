@@ -1,22 +1,22 @@
-package cz.kiec.idontwanttosee.viewmodel
+package cz.kiec.idontwanttosee.ui.screen.addrule
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cz.kiec.idontwanttosee.MutableSaveStateFlow
-import cz.kiec.idontwanttosee.repository.RuleRepository
-import cz.kiec.idontwanttosee.repository.dbs.entity.Rule
-import cz.kiec.idontwanttosee.uiState.RuleEditUiState
+import cz.kiec.idontwanttosee.dbs.entity.Rule
+import cz.kiec.idontwanttosee.dbs.repository.RuleRepository
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class AddRuleViewModel(
     savedStateHandle: SavedStateHandle,
     private val repository: RuleRepository
 ) : ViewModel() {
-    private val _uiState: MutableSaveStateFlow<RuleEditUiState> =
-        MutableSaveStateFlow(savedStateHandle, ADD_RULE_HANDLE, ::RuleEditUiState)
-
-    val uiState = _uiState.flow
+    private val _uiState = savedStateHandle.getMutableStateFlow<AddRuleUiState>(
+        ADD_RULE_HANDLE,
+        AddRuleUiState()
+    )
+    val uiState = _uiState.asStateFlow()
 
     fun setPackageName(value: String) {
         _uiState.value = _uiState.value.copy(packageName = value)
@@ -50,7 +50,7 @@ class AddRuleViewModel(
         }
     }
 
-    private fun RuleEditUiState.toModel() =
+    private fun AddRuleUiState.toModel() =
         Rule(
             0,
             Rule.Filters(

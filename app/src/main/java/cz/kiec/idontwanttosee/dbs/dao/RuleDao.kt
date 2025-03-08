@@ -1,11 +1,11 @@
-package cz.kiec.idontwanttosee.repository.dbs.dao
+package cz.kiec.idontwanttosee.dbs.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import cz.kiec.idontwanttosee.repository.dbs.entity.Rule
+import cz.kiec.idontwanttosee.dbs.entity.Rule
 import kotlinx.coroutines.flow.Flow
 
 @Dao

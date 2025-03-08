@@ -1,18 +1,20 @@
 package cz.kiec.idontwanttosee
 
 import androidx.room.Room
-import cz.kiec.idontwanttosee.repository.RuleRepository
-import cz.kiec.idontwanttosee.repository.RuleRepositoryImpl
-import cz.kiec.idontwanttosee.repository.dbs.AppDatabase
-import cz.kiec.idontwanttosee.repository.dbs.dao.RuleDao
-import cz.kiec.idontwanttosee.viewmodel.AddRuleViewModel
-import cz.kiec.idontwanttosee.viewmodel.ModifyRuleViewModel
-import cz.kiec.idontwanttosee.viewmodel.RulesViewModel
+import cz.kiec.idontwanttosee.dbs.AppDatabase
+import cz.kiec.idontwanttosee.dbs.dao.NotificationChannelDao
+import cz.kiec.idontwanttosee.dbs.dao.RuleDao
+import cz.kiec.idontwanttosee.dbs.repository.NotificationChannelRepository
+import cz.kiec.idontwanttosee.dbs.repository.RuleRepository
+import cz.kiec.idontwanttosee.ui.screen.addnotificationchannel.AddNotificationChannelViewModel
+import cz.kiec.idontwanttosee.ui.screen.addrule.AddRuleViewModel
+import cz.kiec.idontwanttosee.ui.screen.modifyrule.ModifyRuleViewModel
+import cz.kiec.idontwanttosee.ui.screen.notificationchannels.NotificationChannelsViewModel
+import cz.kiec.idontwanttosee.ui.screen.rules.RulesViewModel
 import org.koin.android.ext.koin.androidApplication
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.androidx.viewmodel.dsl.viewModelOf
-import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModel
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val appModule = module {
@@ -20,12 +22,19 @@ val appModule = module {
         val database = get<AppDatabase>()
         database.ruleDao()
     }
+    single<NotificationChannelDao> {
+        val database = get<AppDatabase>()
+        database.notificationChannelDao()
+    }
 
-    singleOf(::RuleRepositoryImpl) { bind<RuleRepository>() }
+    singleOf(::RuleRepository)
+    singleOf(::NotificationChannelRepository)
 
     viewModelOf(::RulesViewModel)
-    viewModel { params -> ModifyRuleViewModel(params.get(), get(), get()) }
     viewModelOf(::AddRuleViewModel)
+    viewModel { params -> ModifyRuleViewModel(params.get(), get()) }
+    viewModelOf(::NotificationChannelsViewModel)
+    viewModelOf(::AddNotificationChannelViewModel)
 
     // Database
     single {

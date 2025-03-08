@@ -10,8 +10,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import cz.kiec.idontwanttosee.ui.screen.BottomNavigationBarEntry
+import cz.kiec.idontwanttosee.ui.navigation.Screen
 import kotlinx.coroutines.flow.map
+
+data class BottomNavigationBarEntry(
+    val label: String,
+    val icon: @Composable () -> Unit,
+    val screen: Screen,
+)
 
 @Composable
 fun BottomNavigationBar(
@@ -31,7 +37,7 @@ fun BottomNavigationBar(
     NavigationBar(modifier) {
         entries.forEach { entry ->
             NavigationBarItem(
-                selected = currentScreen?.hasRoute(entry.screen::class) ?: false,
+                selected = currentScreen?.hasRoute(entry.screen::class) == true,
                 icon = entry.icon,
                 onClick = {
                     navController.navigate(entry.screen) {

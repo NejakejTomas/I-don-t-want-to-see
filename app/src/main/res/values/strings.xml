@@ -5,6 +5,7 @@
 
     <string name="top_bar_back_button_description">Back</string>
     <string name="floating_button_add_rule_description">Add rule</string>
+    <string name="floating_button_add_channel_description">Add notification channel</string>
 
     <string name="add_rule_screen_add">Add</string>
 
@@ -19,11 +20,17 @@
     <string name="rule_filter_ignore_ongoing">Ignore ongoing</string>
     <string name="rule_filter_ignore_with_progressbar">Ignore with progressbar</string>
 
+    <string name="add_channel_screen_add">Add</string>
+
+    <string name="channel_id">Id</string>
+    <string name="channel_name">Name</string>
+
     <string name="navigation_bar_item_rules">Rules</string>
-    <string name="navigation_bar_item_notification_channels">Notification channels</string>
+    <string name="navigation_bar_item_channels">Notification channels</string>
 
     <string name="top_bar_title_rules">Rules</string>
     <string name="top_bar_title_modify_rule">Modify rule</string>
     <string name="top_bar_title_add_rule">Add rule</string>
     <string name="top_bar_title_add_channel">Add channel</string>
+    <string name="top_bar_title_channels">Notification channels</string>
 </resources>

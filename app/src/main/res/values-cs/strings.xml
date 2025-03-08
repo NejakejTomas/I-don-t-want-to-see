@@ -21,7 +21,7 @@
     <string name="rule_filter_ignore_with_progressbar">Ignorovat s progressbarem</string>
 
     <string name="navigation_bar_item_rules">Pravidla</string>
-    <string name="navigation_bar_item_notification_channels">Notifikační kanály</string>
+    <string name="navigation_bar_item_channels">Notifikační kanály</string>
 
     <string name="top_bar_title_rules">Pravidla</string>
     <string name="top_bar_title_modify_rule">Upravit pravidlo</string>

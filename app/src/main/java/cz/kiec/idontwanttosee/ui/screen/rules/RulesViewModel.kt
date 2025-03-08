@@ -1,11 +1,9 @@
-package cz.kiec.idontwanttosee.viewmodel
+package cz.kiec.idontwanttosee.ui.screen.rules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cz.kiec.idontwanttosee.repository.RuleRepository
-import cz.kiec.idontwanttosee.repository.dbs.entity.Rule
-import cz.kiec.idontwanttosee.uiState.RuleUiState
-import cz.kiec.idontwanttosee.uiState.RulesUiState
+import cz.kiec.idontwanttosee.dbs.entity.Rule
+import cz.kiec.idontwanttosee.dbs.repository.RuleRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -27,13 +25,13 @@ class RulesViewModel(private val repository: RuleRepository) : ViewModel() {
         }
     }
 
-    fun deleteRule(rule: RuleUiState) {
+    fun deleteRule(rule: RulesUiState.RuleUiState) {
         viewModelScope.launch {
             repository.delete(rule.toModel())
         }
     }
 
-    fun onClick(rule: RuleUiState) {
+    fun onClick(rule: RulesUiState.RuleUiState) {
         _uiState.update {
             return@update if (it.expandedRules.contains(rule)) it.copy(
                 expandedRules = it.expandedRules.minus(
@@ -44,7 +42,7 @@ class RulesViewModel(private val repository: RuleRepository) : ViewModel() {
         }
     }
 
-    fun onLongClick(rule: RuleUiState) {
+    fun onLongClick(rule: RulesUiState.RuleUiState) {
         _uiState.update { it.copy(editDialogForRule = rule) }
     }
 
@@ -53,7 +51,7 @@ class RulesViewModel(private val repository: RuleRepository) : ViewModel() {
     }
 
     private fun Rule.toUiState() =
-        RuleUiState(
+        RulesUiState.RuleUiState(
             id,
             filters.packageName,
             filters.ignoreOngoing,
@@ -63,7 +61,7 @@ class RulesViewModel(private val repository: RuleRepository) : ViewModel() {
             actions.hideLargeImage
         )
 
-    private fun RuleUiState.toModel() =
+    private fun RulesUiState.RuleUiState.toModel() =
         Rule(
             id,
             Rule.Filters(

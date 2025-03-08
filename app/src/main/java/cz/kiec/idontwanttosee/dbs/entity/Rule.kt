@@ -1,4 +1,4 @@
-package cz.kiec.idontwanttosee.repository.dbs.entity
+package cz.kiec.idontwanttosee.dbs.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded

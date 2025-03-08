@@ -1,33 +1,25 @@
-package cz.kiec.idontwanttosee.viewmodel
+package cz.kiec.idontwanttosee.ui.screen.modifyrule
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cz.kiec.idontwanttosee.MutableSaveStateFlow
-import cz.kiec.idontwanttosee.repository.RuleRepository
-import cz.kiec.idontwanttosee.repository.dbs.entity.Rule
-import cz.kiec.idontwanttosee.uiState.RuleEditUiState
+import cz.kiec.idontwanttosee.dbs.entity.Rule
+import cz.kiec.idontwanttosee.dbs.repository.RuleRepository
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class ModifyRuleViewModel(
     val id: Long,
-    savedStateHandle: SavedStateHandle,
     private val repository: RuleRepository
 ) : ViewModel() {
-    private val _uiState = MutableSaveStateFlow(
-        savedStateHandle,
-        RULE_EDIT_HANDLE
-    ) { RuleEditUiState() }
-    val uiState: StateFlow<RuleEditUiState> = _uiState.flow
+    private val _uiState = MutableStateFlow(ModifyRuleUiState())
+    val uiState: StateFlow<ModifyRuleUiState> = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            // Process recreation
-            if (!savedStateHandle.contains(RULE_EDIT_HANDLE)) {
-                _uiState.value = repository.select(id).first().toUiState()
-            }
+            _uiState.value = repository.select(id).first().toUiState()
 
             uiState.collect { state ->
                 repository.update(state.toModel())
@@ -60,7 +52,7 @@ class ModifyRuleViewModel(
     }
 
     private fun Rule.toUiState() =
-        RuleEditUiState(
+        ModifyRuleUiState(
             filters.packageName,
             filters.ignoreOngoing,
             filters.ignoreWithProgressBar,
@@ -69,7 +61,7 @@ class ModifyRuleViewModel(
             actions.hideLargeImage
         )
 
-    private fun RuleEditUiState.toModel() =
+    private fun ModifyRuleUiState.toModel() =
         Rule(
             id,
             Rule.Filters(
@@ -84,8 +76,4 @@ class ModifyRuleViewModel(
                 hideLargeImage,
             )
         )
-
-    companion object {
-        val RULE_EDIT_HANDLE = "RULE_EDIT"
-    }
 }
